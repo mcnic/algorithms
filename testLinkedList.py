@@ -14,11 +14,13 @@ def test_find():
     n2 = Node(12)
     n3 = Node(55)
     list2.add_in_tail(n1)
+    print('\nlist2 =', list2.get_all())
+    assert(list2.find(n1.value) == n1)
+    assert(list2.find_all(n1.value) == [n1])
+
     list2.add_in_tail(n2)
     list2.add_in_tail(n3)
-    print('\nlist2 =', list2.get_all())
-    assert(list2.find(55).value == 55)
-    assert(list2.find_all(55) == [n1, n3])
+    assert(list2.find_all(n3.value) == [n1, n3])
     assert(list2.get_head() == n1)
     assert(list2.get_tail() == n3)
 
@@ -78,6 +80,7 @@ def test_delete():
     print('list1 len =', list1.len())
     assert(list1.len() == 9)
     assert(list1.get_all() == [55, 12, 43, 10, 14, 12, 55, 10, 5])
+    assert(list1.len() == 9)
     assert(list1.get_head() == list1.find(55))
     assert(list1.get_tail() == list1.find(5))
 
@@ -85,6 +88,7 @@ def test_delete():
     list1.delete(55)
     print(list1.get_all())
     assert(list1.get_all() == [12, 43, 10, 14, 12, 55, 10, 5])
+    assert(list1.len() == 8)
     assert(list1.get_head() == list1.find(12))
     assert(list1.get_tail() == list1.find(5))
 
@@ -92,6 +96,7 @@ def test_delete():
     list1.delete(43)
     print(list1.get_all())
     assert(list1.get_all() == [12, 10, 14, 12, 55, 10, 5])
+    assert(list1.len() == 7)
     assert(list1.get_head() == list1.find(12))
     assert(list1.get_tail() == list1.find(5))
 
@@ -99,6 +104,7 @@ def test_delete():
     list1.delete(12, True)
     print(list1.get_all())
     assert(list1.get_all() == [10, 14, 55, 10, 5])
+    assert(list1.len() == 5)
     assert(list1.get_head() == list1.find(10))
     assert(list1.get_tail() == list1.find(5))
 
@@ -120,6 +126,7 @@ def test_delete():
     list1.delete(None)
     print(list1.get_all())
     assert(list1.get_all() == [10, 14, 55, 10])
+    assert(list1.len() == 4)
     assert(list1.get_head() == list1.find_all(10)[0])
     assert(list1.get_tail() == list1.find_all(10)[1])
 
@@ -139,8 +146,45 @@ def test_delete():
     assert(list1.get_tail() == None)
 
 
-if __name__ == "__main__":
+def compare_list(list1, list2):
+    if list1.len() != list2.len():
+        return False
+    else:
+        result_list = LinkedList()
+        node1 = list1.get_head()
+        node2 = list2.get_head()
+        while node1 != None:
+            result_list.add_in_tail(Node(node1.value + node2.value))
+            node1 = node1.next
+            node2 = node2.next
+        return result_list
 
+
+def test_compare():
+    test_data1 = [55, 12, 43, 10, 14, 12, 55, 10, 5]
+    test_data2 = [55, 12, 43, 10, 14, 12, 55, 10]
+
+    list1 = LinkedList()
+    for val in test_data1:
+        list1.add_in_tail(Node(val))
+
+    list1_copy = LinkedList()
+    for val in test_data1:
+        list1_copy.add_in_tail(Node(val))
+
+    list3 = LinkedList()
+    for val in test_data2:
+        list3.add_in_tail(Node(val))
+
+    assert(compare_list(list1, list3) == False)
+    assert(compare_list(LinkedList(), LinkedList()), [])
+    assert(compare_list(list1, list1_copy).get_all() == [
+           110, 24, 86, 20, 28, 24, 110, 20, 10])
+
+
+if __name__ == "__main__":
     test_find()
     test_insert()
     test_delete()
+
+    test_compare()
