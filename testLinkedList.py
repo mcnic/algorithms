@@ -22,12 +22,13 @@ def test_find():
     n2 = Node(12)
     n3 = Node(55)
     list2.add_in_tail(n1)
-    print('\nlist2 =', list2.get_all())
+    print('\nlist for find =', list2.get_all())
     assert(list2.find(n1.value) == n1)
     assert(list2.find_all(n1.value) == [n1])
 
     list2.add_in_tail(n2)
     list2.add_in_tail(n3)
+    print('\nlist_2 for find =', list2.get_all())
     assert(list2.find_all(n3.value) == [n1, n3])
     assert(list2.get_head() == n1)
     assert(list2.get_tail() == n3)
@@ -41,7 +42,7 @@ def test_insert():
     list3.add_in_tail(n1)
     list3.add_in_tail(n2)
     list3.add_in_tail(n3)
-    print('\nlist3 =', list3.get_all())
+    print('\nlist for insert =', list3.get_all())
     assert(list3.find(55).value == 55)
     assert(list3.find_all(55) == [n1, n3])
     assert(list3.get_head() == n1)
@@ -49,14 +50,14 @@ def test_insert():
 
     n4 = Node(10)
     list3.insert(n2, n4)
-    print('list3 insert 10 after 12 =', list3.get_all())
+    print('insert 10 after 12 =', list3.get_all())
     assert(list3.get_all() == [55, 12, 10, 55])
     assert(list3.get_head() == n1)
     assert(list3.get_tail() == list3.find_all(55)[1])
 
     n5 = Node(20)
     list3.insert(None, n5)
-    print('list3 insert 20 in head =', list3.get_all())
+    print('insert 20 in head =', list3.get_all())
     assert(list3.get_all() == [20, 55, 12, 10, 55])
     assert(list3.get_head() == n5)
     assert(list3.get_tail() == n3)
@@ -64,7 +65,7 @@ def test_insert():
     n6 = Node(22)
     list3_tail = list3.get_tail()
     list3.insert(list3_tail, n6)
-    print('list3 insert 22 after last =', list3.get_all())
+    print('insert 22 after last =', list3.get_all())
     assert(list3.get_all() == [20, 55, 12, 10, 55, 22])
     assert(list3.get_head() == list3.find(20))
     assert(list3.get_tail() == list3.find(22))
@@ -72,7 +73,7 @@ def test_insert():
     list3 = LinkedList()
     n44 = Node(11)
     list3.insert(None, n44)
-    print('\nlist3 insert in clear list =', list3.get_all())
+    print('insert in clear list =', list3.get_all())
     assert(list3.get_all() == [n44.value])
     assert(list3.get_head() == n44)
     assert(list3.get_tail() == n44)
@@ -81,14 +82,14 @@ def test_insert():
 def test_delete():
     list1 = create_list([55, 12, 43, 10, 14, 12, 55, 10, 5])
 
-    print('\nlist1 =', list1.get_all())
+    print('\nlist for delete:\n', list1.get_all())
     assert(list1.len() == 9)
     assert(list1.get_all() == [55, 12, 43, 10, 14, 12, 55, 10, 5])
     assert(list1.len() == 9)
     assert(list1.get_head() == list1.find(55))
     assert(list1.get_tail() == list1.find(5))
 
-    print('\ndelete in head 55:')
+    print('delete in head 55:')
     list1.delete(55)
     print(list1.get_all())
     assert(list1.get_all() == [12, 43, 10, 14, 12, 55, 10, 5])
@@ -96,7 +97,7 @@ def test_delete():
     assert(list1.get_head() == list1.find(12))
     assert(list1.get_tail() == list1.find(5))
 
-    print('\ndelete in body 43:')
+    print('delete in body 43:')
     list1.delete(43)
     print(list1.get_all())
     assert(list1.get_all() == [12, 10, 14, 12, 55, 10, 5])
@@ -104,21 +105,21 @@ def test_delete():
     assert(list1.get_head() == list1.find(12))
     assert(list1.get_tail() == list1.find(5))
 
-    print('\nlist1 delete in tail 5: ')
+    print('delete in tail 5: ')
     list1.delete(5)
     print(list1.get_all())
     assert(list1.get_all() == [12, 10, 14, 12, 55, 10])
     assert(list1.get_head() == list1.find_all(12)[0])
     assert(list1.get_tail() == list1.find_all(10)[1])
 
-    print('\ndelete wrong data: ')
+    print('delete wrong data: ')
     list1.delete(77)
     print(list1.get_all())
     assert(list1.get_all() == [12, 10, 14, 12, 55, 10])
     assert(list1.get_head() == list1.find_all(12)[0])
     assert(list1.get_tail() == list1.find_all(10)[1])
 
-    print('\nlist1 delete None: ')
+    print('delete None: ')
     list1.delete(None)
     print(list1.get_all())
     assert(list1.get_all() == [12, 10, 14, 12, 55, 10])
@@ -126,7 +127,7 @@ def test_delete():
     assert(list1.get_head() == list1.find_all(12)[0])
     assert(list1.get_tail() == list1.find_all(10)[1])
 
-    print('\ndelete in 1-elements list:')
+    print('delete in 1-elements list:')
     list4 = LinkedList()
     n1 = Node(55)
     list4.add_in_tail(n1)
@@ -141,12 +142,20 @@ def test_delete():
     assert(list1.get_head() == None)
     assert(list1.get_tail() == None)
 
+    print('delete 5 from clean list: ')
+    list1.delete(5)
+    print(list1.get_all())
+    assert(list1.get_all() == [])
+    assert(list1.len() == 0)
+    assert(list1.get_head() == None)
+    assert(list1.get_tail() == None)
+
 
 def test_delete_multiple():
     list1 = create_list([55, 7, 12, 43, 10, 14, 12, 55, 10, 5, 5, 55])
-    print('\ntest_delete_multiple:\n', list1.get_all())
+    print('\nlist for delete_multiple:\n', list1.get_all())
 
-    print('\ndelete_multiple 55 in head, body and tail: ')
+    print('delete_multiple 55 in head, body and tail: ')
     list1.delete(55, True)
     print(list1.get_all())
     assert(list1.get_all() == [7, 12, 43, 10, 14, 12, 10, 5, 5])
@@ -154,7 +163,7 @@ def test_delete_multiple():
     assert(list1.get_head() == list1.find(7))
     assert(list1.get_tail() == list1.find_all(5)[1])
 
-    print('\ndelete_multiple 7 in head: ')
+    print('delete_multiple 7 in head: ')
     list1.delete(7, True)
     print(list1.get_all())
     assert(list1.get_all() == [12, 43, 10, 14, 12, 10, 5, 5])
@@ -162,7 +171,7 @@ def test_delete_multiple():
     assert(list1.get_head() == list1.find(12))
     assert(list1.get_tail() == list1.find_all(5)[1])
 
-    print('\ndelete_multiple 10 in body: ')
+    print('delete_multiple 10 in body: ')
     list1.delete(10, True)
     print(list1.get_all())
     assert(list1.get_all() == [12, 43,  14, 12,  5, 5])
@@ -170,7 +179,7 @@ def test_delete_multiple():
     assert(list1.get_head() == list1.find(12))
     assert(list1.get_tail() == list1.find_all(5)[1])
 
-    print('\ndelete_multiple 5 in tail: ')
+    print('delete_multiple 5 in tail: ')
     list1.delete(5, True)
     print(list1.get_all())
     assert(list1.get_all() == [12, 43,  14, 12])
@@ -178,7 +187,7 @@ def test_delete_multiple():
     assert(list1.get_head() == list1.find(12))
     assert(list1.get_tail() == list1.find_all(12)[1])
 
-    print('\ndelete_multiple wrong data 77: ')
+    print('delete_multiple wrong data 77: ')
     list1.delete(77, True)
     print(list1.get_all())
     assert(list1.get_all() == [12, 43,  14, 12])
@@ -187,7 +196,7 @@ def test_delete_multiple():
     assert(list1.get_tail() == list1.find_all(12)[1])
 
     list1 = create_list([5])
-    print('\ndelete_multiple 5 in 1-elements list:', list1.get_all())
+    print('delete_multiple 5 in 1-elements list:', list1.get_all())
     list1.delete(5, True)
     print(list1.get_all())
     assert(list1.get_all() == [])
@@ -195,7 +204,7 @@ def test_delete_multiple():
     assert(list1.get_head() == None)
     assert(list1.get_tail() == None)
 
-    print('\ndelete_multiple 5 in clear list: ')
+    print('delete_multiple 5 in clear list: ')
     list1.delete(5, True)
     print(list1.get_all())
     assert(list1.get_all() == [])
@@ -208,13 +217,24 @@ def test_delete_multiple1():
     list1 = create_list([12, 43,  14, 12, 5, 5])
     print('\ntest_delete_multiple:\n', list1.get_all())
 
-    print('\ndelete_multiple 5 in tail: ')
+    print('delete_multiple 5 in tail: ')
     list1.delete(5, True)
     print(list1.get_all())
     assert(list1.get_all() == [12, 43,  14, 12])
     assert(list1.len() == 4)
     assert(list1.get_head() == list1.find(12))
     assert(list1.get_tail() == list1.find_all(12)[1])
+
+    list1 = create_list([5, 5])
+    print('\ntest_delete_multiple 2:\n', list1.get_all())
+
+    print('delete_multiple 5: ')
+    list1.delete(5, True)
+    print(list1.get_all())
+    assert(list1.get_all() == [])
+    assert(list1.len() == 0)
+    assert(list1.get_head() == None)
+    assert(list1.get_tail() == None)
 
 
 def test_lists_add():
