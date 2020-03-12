@@ -216,7 +216,6 @@ def test_delete_multiple():
 def test_delete_multiple1():
     list1 = create_list([12, 43,  14, 12, 5, 5])
     print('\ntest_delete_multiple:\n', list1.get_all())
-
     print('delete_multiple 5 in tail: ')
     list1.delete(5, True)
     print(list1.get_all())
@@ -227,7 +226,16 @@ def test_delete_multiple1():
 
     list1 = create_list([5, 5])
     print('\ntest_delete_multiple 2:\n', list1.get_all())
+    print('delete_multiple 5: ')
+    list1.delete(5, True)
+    print(list1.get_all())
+    assert(list1.get_all() == [])
+    assert(list1.len() == 0)
+    assert(list1.get_head() == None)
+    assert(list1.get_tail() == None)
 
+    list1 = create_list([5])
+    print('\ntest_delete_multiple 3:\n', list1.get_all())
     print('delete_multiple 5: ')
     list1.delete(5, True)
     print(list1.get_all())
