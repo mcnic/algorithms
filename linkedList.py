@@ -32,6 +32,14 @@ class LinkedList:
             node = node.next
         return res
 
+    def get_all_nodes(self):
+        res = []
+        node = self.head
+        while node != None:
+            res.append(node)
+            node = node.next
+        return res
+
     def find(self, val):
         node = self.head
         while node is not None:
@@ -52,26 +60,30 @@ class LinkedList:
     def delete(self, val, all=False):
         node = self.head
         prev_node = None
-        while node is not None:
+
+        while node != None:
             if node.value == val:
-                if node == self.head:       # is first
+                if node == self.head:   # is first
                     self.head = node.next
-                    if node.next is None:   # is last
-                        self.tail = None
-                else:
-                    if node.next is None:   # is last
-                        if prev_node is not None:
-                            prev_node.next = None
-                        self.tail = prev_node
-                    else:
-                        if prev_node is not None:
-                            prev_node.next = node.next
+                    prev_node = None
+
+                if node.next == None:   # is last
+                    self.tail = prev_node
+                    if prev_node != None:
+                        prev_node.next = None
+                    node = None
+
+                if prev_node != None and node != None:
+                    prev_node.next = node.next
+
+                if node != None:
+                    node = node.next
 
                 if all == False:
                     return
-
-            prev_node = node
-            node = node.next
+            else:
+                prev_node = node
+                node = node.next
 
     def clean(self):
         self.head = None
