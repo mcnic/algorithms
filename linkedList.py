@@ -98,6 +98,9 @@ class LinkedList:
         return len
 
     def insert(self, afterNode, newNode):
+        if newNode is None:
+            return
+
         if afterNode is None:
             if self.head is None:
                 self.head = newNode
