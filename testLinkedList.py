@@ -61,14 +61,14 @@ class TestLinkedList(unittest.TestCase):
         self.assertEqual(list2.get_head(), n1)
         self.assertEqual(list2.get_tail(), n3)
 
-    def test1_insert_to_body(self):
+    def test1_add_in_tail(self):
         list3 = LinkedList()
         n1 = Node(55)
         n2 = Node(12)
         n3 = Node(55)
-        n4 = Node(10)
 
         list3.add_in_tail(n1)
+        self.assertEqual(list3.get_all(), [55])
         self.assertEqual(list3.find(55), n1)
         self.assertEqual(list3.find_all(55), [n1])
         self.assertEqual(list3.get_head(), n1)
@@ -76,10 +76,21 @@ class TestLinkedList(unittest.TestCase):
 
         list3.add_in_tail(n2)
         list3.add_in_tail(n3)
+        self.assertEqual(list3.get_all(), [55, 12, 55])
         self.assertEqual(list3.find(55), n1)
         self.assertEqual(list3.find_all(55), [n1, n3])
         self.assertEqual(list3.get_head(), n1)
         self.assertEqual(list3.get_tail(), n3)
+
+    def test1_insert_to_body(self):
+        list3 = LinkedList()
+        n1 = Node(55)
+        n2 = Node(12)
+        n3 = Node(55)
+        n4 = Node(10)
+        list3.add_in_tail(n1)
+        list3.add_in_tail(n2)
+        list3.add_in_tail(n3)
 
         list3.insert(n2, n4)
         self.assertEqual(list3.get_all(), [
@@ -195,6 +206,71 @@ class TestLinkedList(unittest.TestCase):
         self.assertEqual(list1.len(), 0)
         self.assertEqual(list1.get_head(), None)
         self.assertEqual(list1.get_tail(), None)
+
+    def test_delete_multi_in_head_and_body(self):
+        list1 = LinkedList().create_list([12, 43,  14, 12, 5, 5])
+
+        list1.delete(12, True)
+        self.assertEqual(list1.get_all(), [43,  14, 5, 5])
+        self.assertEqual(list1.len(), 4)
+        self.assertEqual(list1.get_head().value, 43)
+        self.assertEqual(list1.get_tail().value, 5)
+
+    def test_delete_multi_in_tail(self):
+        list1 = LinkedList().create_list([12, 43,  14, 12, 5, 5])
+
+        list1.delete(5, True)
+        self.assertEqual(list1.get_all(), [12, 43,  14, 12])
+        self.assertEqual(list1.len(), 4)
+        self.assertEqual(list1.get_head().value, 12)
+        self.assertEqual(list1.get_tail().value, 12)
+
+    def test_delete_multi_all_data(self):
+        list1 = LinkedList().create_list([5, 5])
+
+        list1.delete(5, True)
+        self.assertEqual(list1.get_all(), [])
+        self.assertEqual(list1.len(), 0)
+        self.assertEqual(list1.get_head(), None)
+        self.assertEqual(list1.get_tail(), None)
+
+    def test_delete_multi_from_1el(self):
+        list1 = LinkedList().create_list([5])
+
+        list1.delete(5, True)
+        self.assertEqual(list1.get_all(), [])
+        self.assertEqual(list1.len(), 0)
+        self.assertEqual(list1.get_head(), None)
+        self.assertEqual(list1.get_tail(), None)
+
+    def test_delete_multi_from_empty(self):
+        list1 = LinkedList()
+
+        list1.delete(5, True)
+        self.assertEqual(list1.get_all(), [])
+        self.assertEqual(list1.len(), 0)
+        self.assertEqual(list1.get_head(), None)
+        self.assertEqual(list1.get_tail(), None)
+
+        list1.delete(None, True)
+        self.assertEqual(list1.get_all(), [])
+        self.assertEqual(list1.len(), 0)
+        self.assertEqual(list1.get_head(), None)
+        self.assertEqual(list1.get_tail(), None)
+
+    def test_delete_multi_wrong(self):
+        list1 = LinkedList().create_list([12, 10, 14, 12, 55, 10])
+
+        list1.delete(77, True)
+        self.assertEqual(list1.get_all(), [12, 10, 14, 12, 55, 10])
+        self.assertEqual(list1.get_head(), list1.find_all(12)[0])
+        self.assertEqual(list1.get_tail(), list1.find_all(10)[1])
+
+        list1.delete(None, True)
+        self.assertEqual(list1.get_all(), [12, 10, 14, 12, 55, 10])
+        self.assertEqual(list1.len(), 6)
+        self.assertEqual(list1.get_head(), list1.find_all(12)[0])
+        self.assertEqual(list1.get_tail(), list1.find_all(10)[1])
 
     def test_clean(self):
         list1 = LinkedList().create_list([55, 12, 43, 10, 14, 12, 55, 10, 5])
