@@ -116,3 +116,9 @@ class LinkedList:
 
     def get_tail(self):
         return self.tail
+
+    def create_list(self, array_list):
+        list1 = LinkedList()
+        for val in array_list:
+            list1.add_in_tail(Node(val))
+        return list1
