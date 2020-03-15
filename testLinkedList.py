@@ -61,7 +61,7 @@ class TestLinkedList(unittest.TestCase):
         self.assertEqual(list2.get_head(), n1)
         self.assertEqual(list2.get_tail(), n3)
 
-    def test1_add_in_tail(self):
+    def test_add_in_tail(self):
         list3 = LinkedList()
         n1 = Node(55)
         n2 = Node(12)
@@ -82,7 +82,7 @@ class TestLinkedList(unittest.TestCase):
         self.assertEqual(list3.get_head(), n1)
         self.assertEqual(list3.get_tail(), n3)
 
-    def test1_insert_to_body(self):
+    def test_insert_to_body(self):
         list3 = LinkedList()
         n1 = Node(55)
         n2 = Node(12)
@@ -98,7 +98,7 @@ class TestLinkedList(unittest.TestCase):
         self.assertEqual(list3.get_head(), n1)
         self.assertEqual(list3.get_tail(), list3.find_all(n1.value)[1])
 
-    def test1_insert_head(self):
+    def test_insert_head(self):
         list3 = LinkedList()
         n1 = Node(55)
         n2 = Node(12)
@@ -116,7 +116,7 @@ class TestLinkedList(unittest.TestCase):
         self.assertEqual(list3.get_head(), n5)
         self.assertEqual(list3.get_tail(), n4)
 
-    def test1_insert_tail(self):
+    def test_insert_in_tail(self):
         list3 = LinkedList().create_list([20, 55, 12, 10, 55])
         n6 = Node(22)
 
@@ -125,7 +125,7 @@ class TestLinkedList(unittest.TestCase):
         self.assertEqual(list3.get_head(), list3.find(20))
         self.assertEqual(list3.get_tail(), n6)
 
-    def test1_insert_empty(self):
+    def test_insert_in_empty(self):
         list3 = LinkedList()
 
         list3.insert(None, None)
@@ -133,7 +133,7 @@ class TestLinkedList(unittest.TestCase):
         self.assertEqual(list3.get_head(), None)
         self.assertEqual(list3.get_tail(), None)
 
-    def test1_insert_to_empty(self):
+    def test_insert_to_empty(self):
         list3 = LinkedList()
         n7 = Node(11)
 
