@@ -94,19 +94,15 @@ class TestLinkedList(unittest.TestCase):
         self.assertEqual(list1.get_tail().next, None)
         self.assertEqual(list1.get_head(), list1.find(12))
         self.assertEqual(list1.get_tail(), list1.find(5))
-        self.assertEqual(list1.get_head().prev, None)
 
     def test_delete_in_tail(self):
         list1 = LinkedList2().create_list([12, 10, 14, 12, 55, 10, 5])
 
-        self.assertEqual(list1.get_head().prev, None)
         list1.delete(5)
         self.assertEqual(list1.get_all(), [12, 10, 14, 12, 55, 10])
         self.assertEqual(list1.get_head().prev, None)
         self.assertEqual(list1.get_tail().next, None)
-        self.assertEqual(list1.get_head(), list1.find_all(12)[0])
         self.assertEqual(list1.get_tail(), list1.find_all(10)[1])
-        self.assertEqual(list1.get_tail().next, None)
         self.assertEqual(list1.get_tail().prev.value, 55)
 
     def test_delete_wrong(self):
@@ -164,7 +160,6 @@ class TestLinkedList(unittest.TestCase):
         self.assertEqual(list1.get_head().prev, None)
         self.assertEqual(list1.get_tail().next, None)
         self.assertEqual(list1.get_head().next.value, 14)
-        self.assertEqual(list1.get_tail().prev.value, 5)
         self.assertEqual(list1.find(14).next.value, 5)
         self.assertEqual(list1.find(5).prev.value, 14)
 
@@ -175,6 +170,8 @@ class TestLinkedList(unittest.TestCase):
         self.assertEqual(list1.get_all(), [12, 43,  14, 12])
         self.assertEqual(list1.len(), 4)
         self.assertEqual(list1.get_head().value, 12)
+        self.assertEqual(list1.find_all(12)[0].value, 12)
+        self.assertEqual(list1.find_all(12)[1].value, 12)
         self.assertEqual(list1.get_tail().value, 12)
         self.assertEqual(list1.get_head().prev, None)
         self.assertEqual(list1.get_tail().next, None)
@@ -290,7 +287,8 @@ class TestLinkedList(unittest.TestCase):
         self.assertEqual(list3.get_all(), [
                          n1.value, n2.value, n4.value, n3.value])
         self.assertEqual(list3.get_head(), n1)
-        self.assertEqual(list3.get_tail(), list3.find_all(n1.value)[1])
+        self.assertEqual(list3.get_tail(), list3.find_all(
+            n3.value)[len(list3.find_all(n3.value))-1])
         self.assertEqual(list3.get_head().prev, None)
         self.assertEqual(list3.get_tail().next, None)
         self.assertEqual(n2.next, n4)
@@ -331,7 +329,7 @@ class TestLinkedList(unittest.TestCase):
         self.assertEqual(list3.get_head().prev, None)
         self.assertEqual(list3.get_tail().next, None)
         self.assertEqual(list3.find_all(55)[1].next, list3.find(22))
-        self.assertEqual(list3.find(22).prev, list3.find_all(55)[1])
+        self.assertEqual(n6.prev.value, 55)
 
     def test_insert_to_empty(self):
         list3 = LinkedList2()
@@ -363,10 +361,9 @@ class TestLinkedList(unittest.TestCase):
         list3.add_in_head(n1)
         self.assertEqual(list3.get_all(), [55])
         self.assertEqual(list3.get_head(), n1)
-        self.assertEqual(list3.get_head().prev, None)
-        self.assertEqual(list3.get_tail().next, None)
-        self.assertEqual(list3.get_head().next, None)
-        self.assertEqual(list3.get_head().prev, None)
+        self.assertEqual(list3.get_tail(), n1)
+        self.assertEqual(n1.prev, None)
+        self.assertEqual(n1.next, None)
 
     def test_add_in_head_in_1el(self):
         list3 = LinkedList2()
@@ -384,10 +381,11 @@ class TestLinkedList(unittest.TestCase):
 
         list3.add_in_head(n4)
         self.assertEqual(list3.get_all(), [10, 55])
-        self.assertEqual(list3.get_head(), n4)
         self.assertEqual(list3.get_head().prev, None)
         self.assertEqual(list3.get_tail().next, None)
-        self.assertEqual(list3.get_head().next, n1)
+        self.assertEqual(list3.get_head(), n4)
+        self.assertEqual(list3.get_tail(), n1)
+        self.assertEqual(n4.next, n1)
         self.assertEqual(n1.prev, n4)
 
     def test_add_in_head(self):
@@ -403,20 +401,20 @@ class TestLinkedList(unittest.TestCase):
 
         list3.add_in_head(n4)
         self.assertEqual(list3.get_all(), [10, 55, 12, 55])
-        self.assertEqual(list3.get_head(), n4)
         self.assertEqual(list3.get_head().prev, None)
         self.assertEqual(list3.get_tail().next, None)
-        self.assertEqual(list3.get_head().next, n1)
+        self.assertEqual(list3.get_head(), n4)
+        self.assertEqual(n4.next, n1)
         self.assertEqual(n1.prev, n4)
 
         list3.add_in_head(n5)
         self.assertEqual(list3.get_all(), [20, 10, 55, 12, 55])
         self.assertEqual(list3.get_head(), n5)
-        self.assertEqual(list3.get_head().next, n4)
+        self.assertEqual(n5.next, n4)
         self.assertEqual(n4.prev, n5)
 
         list3.add_in_head(None)
         self.assertEqual(list3.get_all(), [20, 10, 55, 12, 55])
         self.assertEqual(list3.get_head(), n5)
-        self.assertEqual(list3.get_head().next, n4)
+        self.assertEqual(n5.next, n4)
         self.assertEqual(n4.prev, n5)
