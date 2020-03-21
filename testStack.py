@@ -8,10 +8,12 @@ class TestLinkedList(unittest.TestCase):
         stack = Stack()
 
         self.assertEqual(stack.size(), 0)
-        with self.assertRaises(IndexError):
-            stack.peek()
-        with self.assertRaises(IndexError):
-            stack.pop()
+        # with self.assertRaises(IndexError):
+        #    stack.peek()
+        self.assertEqual(stack.peek(), None)
+        # with self.assertRaises(IndexError):
+        #    stack.pop()
+        self.assertEqual(stack.pop(), None)
 
     def test_push_peek(self):
         stack = Stack()
@@ -47,10 +49,12 @@ class TestLinkedList(unittest.TestCase):
         stack = Stack(True)
 
         self.assertEqual(stack.size(), 0)
-        with self.assertRaises(IndexError):
-            stack.peek()
-        with self.assertRaises(IndexError):
-            stack.pop()
+        # with self.assertRaises(IndexError):
+        #    stack.peek()
+        self.assertEqual(stack.peek(), None)
+        # with self.assertRaises(IndexError):
+        #    stack.pop()
+        self.assertEqual(stack.pop(), None)
 
     def test_push_peek_head(self):
         stack = Stack(True)

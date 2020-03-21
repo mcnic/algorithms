@@ -4,28 +4,33 @@ class Stack:
         # self.stack = []
         self.stack = LinkedList2()
         self.use_head = use_head
+        self._size = 0
 
     def size(self):
         # return len(self.stack)
-        return self.stack.len()
+        # return self.stack.len()
+        return self._size
 
     def push(self, value):
         if self.use_head:
             self.stack.add_in_head(Node(value))
         else:
             self.stack.add_in_tail(Node(value))
+        self._size += 1
 
     def peek(self):
         if self.use_head:
             head = self.stack.get_head()
             if head == None:
-                raise IndexError('Stack is clear')
+                #raise IndexError('Stack is clear')
+                return None
             else:
                 return head.value
         else:
             tail = self.stack.get_tail()
             if tail == None:
-                raise IndexError('Stack is clear')
+                #raise IndexError('Stack is clear')
+                return None
             else:
                 return tail.value
 
@@ -36,6 +41,9 @@ class Stack:
             self.stack.delete_head()
         else:
             self.stack.delete_tail()
+
+        if res != None:
+            self._size -= 1
 
         return res
 
@@ -145,7 +153,8 @@ class LinkedList2:
         node = self.head
 
         if node == None:
-            raise IndexError('Stack is clear')
+            #raise IndexError('Stack is clear')
+            return
 
         self.head = node.next
         if self.head != None:
@@ -155,7 +164,8 @@ class LinkedList2:
         node = self.tail
 
         if node == None:
-            raise IndexError('Stack is clear')
+            #raise IndexError('Stack is clear')
+            return
 
         if node == self.head:   # is first and alone
             self.head = None
