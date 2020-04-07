@@ -14,13 +14,17 @@ class TestDedeque(unittest.TestCase):
     def test_addFront(self):
         deque = Deque()
 
-        deque.addFront(11)
-        self.assertEqual(deque.get_all(), [11])
+        deque.addFront(None)
+        self.assertEqual(deque.get_all(), [None])
         self.assertEqual(deque.size(), 1)
 
-        deque.addFront(22)
-        self.assertEqual(deque.get_all(), [22, 11])
+        deque.addFront(11)
+        self.assertEqual(deque.get_all(), [11, None])
         self.assertEqual(deque.size(), 2)
+
+        deque.addFront(22)
+        self.assertEqual(deque.get_all(), [22, 11, None])
+        self.assertEqual(deque.size(), 3)
 
     def test_addTail(self):
         deque = Deque()
@@ -48,6 +52,10 @@ class TestDedeque(unittest.TestCase):
         self.assertEqual(deque.get_all(), [])
         self.assertEqual(res, 22)
 
+        res = deque.removeFront()
+        self.assertEqual(deque.get_all(), [])
+        self.assertEqual(res, None)
+
     def test_removeTail(self):
         deque = Deque()
         deque.addTail(11)
@@ -62,3 +70,7 @@ class TestDedeque(unittest.TestCase):
         res = deque.removeTail()
         self.assertEqual(deque.get_all(), [])
         self.assertEqual(res, 11)
+
+        res = deque.removeTail()
+        self.assertEqual(deque.get_all(), [])
+        self.assertEqual(res, None)

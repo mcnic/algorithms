@@ -1,14 +1,15 @@
 class Deque:
+
     def __init__(self):
         self._deque = LinkedList2()
         self._size = 0
 
     def addFront(self, item):
-        self._deque.add_in_head(Node(item))
+        self._deque.add_in_head(Node2(item))
         self._size += 1
 
     def addTail(self, item):
-        self._deque.add_in_tail(Node(item))
+        self._deque.add_in_tail(Node2(item))
         self._size += 1
 
     def removeFront(self):
@@ -36,7 +37,7 @@ class Deque:
         return self._deque.get_all()
 
 
-class Node:
+class Node2:
     def __init__(self, v):
         self.value = v
         self.prev = None

@@ -1,5 +1,6 @@
 
 class Stack:
+
     def __init__(self, use_head=False):
         # self.stack = []
         self.stack = LinkedList2()

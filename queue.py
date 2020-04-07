@@ -1,4 +1,5 @@
 class Queue:
+
     def __init__(self):
         self.queue = LinkedList2()
         self._size = 0
