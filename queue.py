@@ -138,9 +138,13 @@ class LinkedList2:
             #raise IndexError('Stack is clear')
             return
 
-        self.head = node.next
-        if self.head != None:
-            self.head.prev = None
+        if node == self.tail:   # is first and alone
+            self.head = None
+            self.tail = None
+        else:
+            self.head = node.next
+            if self.head != None:
+                self.head.prev = None
 
     def delete_tail(self):
         node = self.tail
