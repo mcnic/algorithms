@@ -1,4 +1,7 @@
 class Deque:
+    '''
+        list is LinkedList2
+    '''
 
     def __init__(self):
         self._deque = LinkedList2()
