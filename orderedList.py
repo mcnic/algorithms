@@ -113,7 +113,7 @@ class OrderedList:
                     return node
                 node = node.next
 
-    def delete(self, val, strong=False):
+    def delete(self, val, strong=True):
         node = self.find(val, strong)
 
         if node == None:
