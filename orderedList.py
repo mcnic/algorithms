@@ -147,6 +147,7 @@ class OrderedList:
         self.head = None
         self.tail = None
         self.__ascending = asc
+        self._len = 0
 
     def len(self):
         return self._len

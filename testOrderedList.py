@@ -9,13 +9,17 @@ class TestOrderedList(unittest.TestCase):
         orderedList.add(1)
         orderedList.add(2)
         orderedList.add(3)
+        self.assertEqual(orderedList.len(), 3)
 
         orderedList.clean(True)
         self.assertEqual(orderedList.get_all(), [])
+        self.assertEqual(orderedList.len(), 0)
 
         orderedList.add(10)
         orderedList.clean(True)
+        self.assertEqual(orderedList.len(), 0)
         orderedList.add(5)
+        self.assertEqual(orderedList.len(), 1)
 
     def test_compare(self):
         orderedList = OrderedList(True)
@@ -33,18 +37,23 @@ class TestOrderedList(unittest.TestCase):
 
         orderedList.add(5)
         self.assertEqual(orderedList.get_all_values(), [5])
+        self.assertEqual(orderedList.len(), 1)
 
         orderedList.add(8)
         self.assertEqual(orderedList.get_all_values(), [5, 8])
+        self.assertEqual(orderedList.len(), 2)
 
         orderedList.add(3)
         self.assertEqual(orderedList.get_all_values(), [3, 5, 8])
+        self.assertEqual(orderedList.len(), 3)
 
         orderedList.add(1)
         self.assertEqual(orderedList.get_all_values(), [1, 3, 5, 8])
+        self.assertEqual(orderedList.len(), 4)
 
         orderedList.add(6)
         self.assertEqual(orderedList.get_all_values(), [1, 3, 5, 6, 8])
+        self.assertEqual(orderedList.len(), 5)
 
     def test_add_desc(self):
         orderedList = OrderedList(False)
@@ -116,15 +125,19 @@ class TestOrderedList(unittest.TestCase):
         orderedList.add(8)
         orderedList.add(10)
         self.assertEqual(orderedList.get_all_values(), [2, 4, 6, 8, 10])
+        self.assertEqual(orderedList.len(), 5)
 
         orderedList.delete(1, False)
         self.assertEqual(orderedList.get_all_values(), [4, 6, 8, 10])
+        self.assertEqual(orderedList.len(), 4)
 
         orderedList.delete(9, False)
         self.assertEqual(orderedList.get_all_values(), [4, 6, 8])
+        self.assertEqual(orderedList.len(), 3)
 
         orderedList.delete(5, False)
         self.assertEqual(orderedList.get_all_values(), [4, 8])
+        self.assertEqual(orderedList.len(), 2)
 
         orderedList.delete(7, False)
         orderedList.delete(4, False)
