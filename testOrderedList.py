@@ -19,6 +19,8 @@ class TestOrderedList(unittest.TestCase):
         self.assertEqual(orderedList.len(), 0)
 
         orderedList.add(10)
+        self.assertEqual(orderedList.len(), 1)
+
         orderedList.clean(True)
         self.assertEqual(orderedList.len(), 0)
 
@@ -40,6 +42,8 @@ class TestOrderedList(unittest.TestCase):
         self.assertEqual(orderedList.len(), 0)
 
         orderedList.add(10)
+        self.assertEqual(orderedList.len(), 1)
+
         orderedList.clean(False)
         self.assertEqual(orderedList.len(), 0)
 
@@ -179,6 +183,14 @@ class TestOrderedList(unittest.TestCase):
         self.assertEqual(orderedList.len(), 1)
 
         orderedList.delete(4)
+        self.assertEqual(orderedList.get_all_values(), [])
+        self.assertEqual(orderedList.len(), 0)
+
+        orderedList.add(8)
+        self.assertEqual(orderedList.get_all_values(), [8])
+        self.assertEqual(orderedList.len(), 1)
+
+        orderedList.delete(8)
         self.assertEqual(orderedList.get_all_values(), [])
         self.assertEqual(orderedList.len(), 0)
 
