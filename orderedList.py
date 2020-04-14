@@ -6,11 +6,6 @@ class Node:
 
 
 class OrderedList:
-    '''
-        из-за непонятки насчет удаления (по полному совпадению, или используя нестрогий поиск), 
-        сделано 2 варианта поиска и 2 варианта удаления
-    '''
-
     def __init__(self, asc):
         self.head = None
         self.tail = None
@@ -25,11 +20,12 @@ class OrderedList:
         return 0
 
     def add(self, value):
+        self._len += 1
+
         # if list clear
         if self.head == None:
             self.head = Node(value)
             self.tail = self.head
-            self._len = 1
             return
 
         if self.__ascending == True:
@@ -39,7 +35,6 @@ class OrderedList:
                 node.prev = self.tail
                 self.tail.next = node
                 self.tail = node
-                self._len += 1
                 return
 
             # value little head value
@@ -48,7 +43,6 @@ class OrderedList:
                 node.next = self.head
                 self.head.prev = node
                 self.head = node
-                self._len += 1
                 return
 
             # brute force all value
@@ -60,7 +54,6 @@ class OrderedList:
                     node.prev = el.prev
                     node.prev.next = node
                     node.next.prev = node
-                    self._len += 1
                     return
                 el = el.next
 
@@ -71,7 +64,6 @@ class OrderedList:
                 node.next = self.head
                 self.head.prev = node
                 self.head = node
-                self._len += 1
                 return
 
             # value littles tail value
@@ -80,7 +72,6 @@ class OrderedList:
                 node.prev = self.tail
                 self.tail.next = node
                 self.tail = node
-                self._len += 1
                 return
 
             # brute force all value
@@ -92,29 +83,24 @@ class OrderedList:
                     node.next = el.next
                     node.next.prev = node
                     el.next = node
-                    self._len += 1
                     return
                 el = el.prev
 
-    def find(self, val, strong=False):
+    def find(self, val):
         node = self.head
-        if strong == False:
-            while node != None:
-                if self.__ascending == True:
-                    if node.value >= val:
-                        return node
-                else:
-                    if node.value <= val:
-                        return node
-                node = node.next
-        else:
-            while node != None:
-                if node.value == val:
-                    return node
-                node = node.next
+        while node != None:
+            if (self.__ascending == True and node.value > val) or (self.__ascending == False and node.value < val):
+                return None
 
-    def delete(self, val, strong=True):
-        node = self.find(val, strong)
+            if node.value == val:
+                return node
+
+            node = node.next
+
+        return None
+
+    def delete(self, val):
+        node = self.find(val)
 
         if node == None:
             return
@@ -150,6 +136,14 @@ class OrderedList:
         self._len = 0
 
     def len(self):
+        '''
+        node = self.head
+        len = 0
+        while node != None:
+            len += 1
+            node = node.next
+        return len
+        '''
         return self._len
 
     def get_all(self):
