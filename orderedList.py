@@ -152,7 +152,7 @@ class OrderedList:
 
     def len(self):
         return self._len
-
+        '''
         node = self.head
         len = 0
         while node != None:
@@ -163,6 +163,7 @@ class OrderedList:
             raise(SyntaxError)
 
         return len
+        '''
 
     def get_all(self):
         r = []
