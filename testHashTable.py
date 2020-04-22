@@ -19,7 +19,7 @@ class TestHashTable(unittest.TestCase):
         self.assertEqual(hashTable.hash_fun('fsdfhxvnxmcvnxc5435sd'), 13)
         self.assertEqual(hashTable.hash_fun('fsdfhxvnxm5443nxcbfvjksd'), 13)
 
-    def _test_seek_slot(self):
+    def test_seek_slot(self):
         hashTable = HashTable(19, 3)
 
         self.assertEqual(hashTable.seek_slot('fsdfhxvn980cvnxcbfvjksd'), 8)

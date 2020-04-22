@@ -24,7 +24,7 @@ class HashTable:
         '''
         slot = self.hash_fun(value)
         # reapir collision
-        max_loop = 100
+        max_loop = 10 * self.size
         while self.slots[slot] != None:
             max_loop -= 1
             if max_loop < 0:
