@@ -50,6 +50,26 @@ class TestPowerSet(unittest.TestCase):
         ps.put('abc')
         self.assertEqual(ps.size(), 2)
 
+        ps.put('abc')
+        self.assertEqual(ps.size(), 2)
+
+        ps.put('naeekbnhha')
+        self.assertEqual(ps.size(), 3)
+        ps.put('fkmmeilabl')                # slot is buzy
+        self.assertEqual(ps.size(), 4)
+
+        ps.put('pqbpdmhdkc')
+        self.assertEqual(ps.size(), 5)
+        ps.put('fnlmmnckdl')                # slot is buzy
+        self.assertEqual(ps.size(), 6)
+
+        #print('\n', ps.get_slots())
+        slots = ps.get_slots()
+        self.assertEqual(slots[13262], 'naeekbnhha')
+        self.assertEqual(slots[13295], 'fkmmeilabl')
+        self.assertEqual(slots[14490], 'pqbpdmhdkc')
+        self.assertEqual(slots[14523], 'fnlmmnckdl')
+
     def test_remove(self):
         ps = PowerSet()
         ps.put('abc')
@@ -57,7 +77,13 @@ class TestPowerSet(unittest.TestCase):
         ps.put('ghx')
         ps.put('cvb')
 
+        self.assertEqual(ps.get('abc'), True)
+        self.assertEqual(ps.get('def'), True)
+        self.assertEqual(ps.get('ghx'), True)
+        self.assertEqual(ps.get('cvb'), True)
+
         self.assertEqual(ps.remove('abc'), True)
+        self.assertEqual(ps.get('abc'), False)
         self.assertEqual(ps.size(), 3)
 
         self.assertEqual(ps.remove('abc1'), False)
@@ -67,13 +93,32 @@ class TestPowerSet(unittest.TestCase):
         self.assertEqual(ps.size(), 3)
 
         self.assertEqual(ps.remove('def'), True)
+        self.assertEqual(ps.get('def'), False)
         self.assertEqual(ps.size(), 2)
 
         self.assertEqual(ps.remove('ghx'), True)
+        self.assertEqual(ps.get('ghx'), False)
         self.assertEqual(ps.size(), 1)
 
         self.assertEqual(ps.remove('cvb'), True)
+        self.assertEqual(ps.get('cvb'), False)
         self.assertEqual(ps.size(), 0)
+
+        self.assertEqual(ps.remove('111111'), False)
+        self.assertEqual(ps.size(), 0)
+
+        ps.put('cvb')
+        self.assertEqual(ps.remove('cvb'), True)
+        self.assertEqual(ps.get('cvb'), False)
+        self.assertEqual(ps.size(), 0)
+
+    def test_remove_hard(self):
+        ps = self.seed_power_set('abcdefghiklmnopq', 1000, 10)
+
+        #print('\n', ps.get_slots())
+
+        for val in ps.get_val():
+            self.assertEqual(ps.remove(val), True)
 
     def test_get(self):
         ps = PowerSet()

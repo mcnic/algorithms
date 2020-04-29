@@ -21,28 +21,74 @@ class PowerSet:
             self.len / 16)], 16)  # hex to int
         return hash % self.len
 
-    def seek_slot(self, value):
+    def _seek_slot(self, value, debug=False):
         '''
         находит индекс пустого слота для значения, или None
+        находит слот(индекс) с значением value, 
+        либо пустой слот (если значения нет),
+        либо None (если не получается выделить новый пустой слот)
         '''
         slot = self.hash_fun(value)
-        if self.slots[slot] == value:
+        if debug:
+            print('\nval=', value, ', slot=', slot)
+
+        if self.slots[slot] == value:  # seek success
+            if debug:
+                print(1)
             return slot
 
         # repair collision: seek new empty slot or seek value in other slot
         max_loop = 10 * self.len
-        while not (self.slots[slot] == None or self.slots[slot] == value):
+        while not(self.slots[slot] == None or self.slots[slot] == value):
             max_loop -= 1
+            if debug:
+                print(2)
+
             if max_loop < 0:
+                if debug:
+                    print(3)
                 return None
 
-            if abs(self.step) >= self.len:
-                return None
+            # if abs(self.step) >= self.len:
+            #    return None
 
             slot += self.step
+
+            if slot >= self.len:
+                if debug:
+                    print(4)
+                slot -= self.len
+
+        if debug:
+            print(5)
+        return slot
+
+    def seek_slot(self, value):
+        '''
+        находит слот(индекс) с значением value, 
+        либо пустой слот (если значения нет),
+        либо None (если не получается выделить новый пустой слот)
+        '''
+        slot = self.hash_fun(value)
+
+        # repair collision: seek new empty slot or seek value in other slot
+        max_loop = 10 * self.len
+        while max_loop > 0:
+            if self.slots[slot] == value:  # seek success
+                return slot
+
+            if self.slots[slot] == None:  # seek empty slot
+                return slot
+
+            max_loop -= 1
+
+            #print('\nvalue', value, 'slot=', slot, 'buzy is', self.slots[slot], '->', slot + self.step)
+            slot += self.step
+
             if slot >= self.len:
                 slot -= self.len
-        return slot
+
+        return None
 
     def size(self):
         '''
@@ -91,15 +137,20 @@ class PowerSet:
         возвращает True если value удалено
         иначе False
         '''
-        slot = self.seek_slot(value)
+        slot = self.hash_fun(value)
 
-        if slot == None:
-            return False
+        max_loop = 10 * self.len
+        while max_loop > 0:
+            if self.slots[slot] == value:  # seek success
+                self.slots[slot] = None
+                self._size -= 1
+                return True
 
-        if self.slots[slot] == value:
-            self.slots[slot] = None
-            self._size -= 1
-            return True
+            max_loop -= 1
+            slot += self.step
+
+            if slot >= self.len:
+                slot -= self.len
 
         return False
 
@@ -155,5 +206,14 @@ class PowerSet:
         while i < self.len:
             if self.slots[i] != None:
                 res.append(self.slots[i])
+            i += 1
+        return res
+
+    def get_slots(self):
+        i = 0
+        res = {}
+        while i < self.len:
+            if self.slots[i] != None:
+                res[i] = self.slots[i]
             i += 1
         return res
