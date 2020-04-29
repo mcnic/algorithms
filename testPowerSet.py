@@ -63,7 +63,7 @@ class TestPowerSet(unittest.TestCase):
         ps.put('fnlmmnckdl')                # slot is buzy
         self.assertEqual(ps.size(), 6)
 
-        #print('\n', ps.get_slots())
+        # print('\n', ps.get_slots())
         slots = ps.get_slots()
         self.assertEqual(slots[13262], 'naeekbnhha')
         self.assertEqual(slots[13295], 'fkmmeilabl')
@@ -115,10 +115,14 @@ class TestPowerSet(unittest.TestCase):
     def test_remove_hard(self):
         ps = self.seed_power_set('abcdefghiklmnopq', 1000, 10)
 
-        #print('\n', ps.get_slots())
+        # print('\n', ps.get_slots())
 
+        size = ps.size()
         for val in ps.get_val():
+            size -= 1
             self.assertEqual(ps.remove(val), True)
+            self.assertEqual(ps.size(), size)
+        self.assertEqual(ps.size(), 0)
 
     def test_get(self):
         ps = PowerSet()
@@ -138,14 +142,14 @@ class TestPowerSet(unittest.TestCase):
 
     def test_intersection(self):
         ps1 = self.seed_power_set('abcdef', 100, 2)
-        #print('\nsize1=', ps1.size())
+        # print('\nsize1=', ps1.size())
         # print(ps1.get_val())
         ps2 = self.seed_power_set('abcdef', 100, 2)
-        #print('\nsize2=', ps2.size())
+        # print('\nsize2=', ps2.size())
         # print(ps2.get_val())
 
         ps = ps1.intersection(ps2)
-        #print('\nsize=', ps.size())
+        # print('\nsize=', ps.size())
         # print(ps.get_val())
 
         for val in ps.get_val():
@@ -162,9 +166,9 @@ class TestPowerSet(unittest.TestCase):
         ps2 = self.seed_power_set('ghjkl', 100, 2)
 
         ps = ps1.union(ps2)
-        #print('\n1=', ps1.get_val())
-        #print('\n2=', ps2.get_val())
-        #print('\n=', ps.get_val())
+        # print('\n1=', ps1.get_val())
+        # print('\n2=', ps2.get_val())
+        # print('\n=', ps.get_val())
         for val in ps1.get_val():
             self.assertEqual(ps.get(val), True)
         for val in ps2.get_val():

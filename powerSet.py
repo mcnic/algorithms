@@ -21,48 +21,6 @@ class PowerSet:
             self.len / 16)], 16)  # hex to int
         return hash % self.len
 
-    def _seek_slot(self, value, debug=False):
-        '''
-        находит индекс пустого слота для значения, или None
-        находит слот(индекс) с значением value, 
-        либо пустой слот (если значения нет),
-        либо None (если не получается выделить новый пустой слот)
-        '''
-        slot = self.hash_fun(value)
-        if debug:
-            print('\nval=', value, ', slot=', slot)
-
-        if self.slots[slot] == value:  # seek success
-            if debug:
-                print(1)
-            return slot
-
-        # repair collision: seek new empty slot or seek value in other slot
-        max_loop = 10 * self.len
-        while not(self.slots[slot] == None or self.slots[slot] == value):
-            max_loop -= 1
-            if debug:
-                print(2)
-
-            if max_loop < 0:
-                if debug:
-                    print(3)
-                return None
-
-            # if abs(self.step) >= self.len:
-            #    return None
-
-            slot += self.step
-
-            if slot >= self.len:
-                if debug:
-                    print(4)
-                slot -= self.len
-
-        if debug:
-            print(5)
-        return slot
-
     def seek_slot(self, value):
         '''
         находит слот(индекс) с значением value, 
