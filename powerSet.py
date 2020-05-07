@@ -30,7 +30,7 @@ class PowerSet:
         slot = self.hash_fun(value)
 
         # repair collision: seek new empty slot or seek value in other slot
-        max_loop = 10 * self.len
+        max_loop = 5 * self.len
         while max_loop > 0:
             if self.slots[slot] == value:  # seek success
                 return slot
@@ -38,13 +38,12 @@ class PowerSet:
             if self.slots[slot] == None:  # seek empty slot
                 return slot
 
-            max_loop -= 1
-
             #print('\nvalue', value, 'slot=', slot, 'buzy is', self.slots[slot], '->', slot + self.step)
             slot += self.step
 
             if slot >= self.len:
                 slot -= self.len
+                max_loop -= 1
 
         return None
 
@@ -59,11 +58,8 @@ class PowerSet:
         находит индекс слота со значением, или None
         '''
         slot = self.hash_fun(value)
-        max_loop = 100
+        max_loop = 20
         while self.slots[slot] != value:
-            max_loop -= 1
-            if max_loop < 0:
-                return None
 
             if abs(self.step) >= self.len:
                 return None
@@ -71,6 +67,9 @@ class PowerSet:
             slot += self.step
             if slot >= self.len:
                 slot -= self.len
+                max_loop -= 1
+                if max_loop < 0:
+                    return None
         return slot
 
     def put(self, value):
