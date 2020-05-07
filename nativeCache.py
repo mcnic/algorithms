@@ -6,6 +6,9 @@ import copy
 class NativeCache:
 
     def __init__(self, sz):
+        '''
+        для ускорения поиска в slots храним key=hash(value)
+        '''
         self.size = sz
         self.slots = [None] * self.size
         self.values = [None] * self.size
@@ -23,8 +26,6 @@ class NativeCache:
         '''
         в качестве key поступают строки!
         '''
-        #hash = hashlib.sha1()
-        # hash.update(key.encode())
         hash = int(key[:math.ceil(
             self.size / 16)], 16)  # hex to int
         return hash % self.size
